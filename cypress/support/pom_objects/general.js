@@ -6,7 +6,8 @@ const generalSelectors = {
     loginTitle: '.modal-content .modal-title.title',
     daySelector: '.day',
     submit: '[type="submit"]',
-    hotelSelection: '.single-content-item.pb-4 .title.font-size-26'
+    hotelSelection: '.single-content-item.my-4 .title.font-size-26',
+    tourSelection: '.single-content-item.pb-4 .title.font-size-26'
 
 }
 

@@ -1,25 +1,37 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+/// <reference types="Cypress" />
+
+import { generalSelectors , headerLogin } from '../support/pom_objects/general'
+import { login, pageAssertions } from '../fixtures/assertionData'
+import { userSelectors } from '../support/pom_objects/userSelectors'
+
+Cypress.Commands.add("login", () => {
+    cy.scrollTo('top')
+    cy.get(generalSelectors.login).click({ force: true })
+})
+
+Cypress.Commands.add("enterValue", (selector, value) => {
+    cy.get(selector).focus()
+    cy.get(selector)
+    .clear()
+    .type(value)
+})
+
+Cypress.Commands.add("selectAtIndex", (selector, index) => {
+    cy.get(selector)
+    .eq(index)
+    .click({ force : true })
+})
+
+Cypress.Commands.add("scrollAndCheckValue", (selector, value) => {
+    cy.scrollTo('top')
+    cy.get(selector).should('have.value', value)
+})
+
+Cypress.Commands.add("scrollAndCheckText", (selector, value) => {
+    cy.scrollTo('top')
+    cy.get(selector).should('have.text', value)
+})
+
+Cypress.Commands.add("flightTravler", (selector) => {
+    cy.get(`.dropdown-item.${selector} .la.la-plus`).click( {force: true } )
+})

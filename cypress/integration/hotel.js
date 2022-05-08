@@ -18,26 +18,19 @@ describe('Select a Hotel', () => {
     })
 
     it('should move to the next hotel slide', () => {
-        cy.get('.owl-dots .owl-dot')
-        .eq(1)
-        .click({force:true})
+        cy.selectAtIndex('.owl-dots .owl-dot', 1)
     })
 
     it('should select Malmaison Manchester Hotel', () => {
-        cy.get('.owl-stage a.d-block.waves-effect')
-        .eq(9)
-        .click( { force: true })
+        cy.selectAtIndex('.owl-stage a.d-block.waves-effect', 9)
     })
 
     it('should check if the correct hotel is chosen', () => {
-        cy.scrollTo('top')
-        cy.get(generalSelectors.hotelSelection).should('have.text', destination.hotel)
+        cy.scrollAndCheckText(generalSelectors.hotelSelection, destination.hotel)
     })
 
     it('should select one bedroom', () => {
-        cy.get(generalSelectors.submit)
-        .eq(0)
-        .click( { force: true } )
+        cy.selectAtIndex(generalSelectors.submit, 0)
     })
 
     it('should check if user has landed on hotel bookings page', () => {
@@ -52,28 +45,23 @@ describe('Select a Hotel', () => {
     describe('Add personal information', () => {
 
         it('should enter the First name', () => {
-            cy.get(userSelectors.firstNameSelector).focus()
-            cy.get(userSelectors.firstNameSelector).type(user1.firstName)
+            cy.enterValue(userSelectors.firstNameSelector, user1.firstName)
         })
     
         it('should enter the Last name', () => {
-            cy.get(userSelectors.lastNameSelector).focus()
-            cy.get(userSelectors.lastNameSelector).type(user1.lastName)
+            cy.enterValue(userSelectors.lastNameSelector, user1.lastName)
         })
     
         it('should enter the users email', () => {
-            cy.get(userSelectors.emailSelector).focus()
-            cy.get(userSelectors.emailSelector).type(user1.email)
+            cy.enterValue(userSelectors.emailSelector, user1.email)
         })
     
         it('should enter the users phone', () => {
-            cy.get(userSelectors.phoneSelector).focus()
-            cy.get(userSelectors.phoneSelector).type(user1.email)
+            cy.enterValue(userSelectors.phoneSelector, user1.phone)
         })
         
         it('should enter the users address', () => {
-            cy.get(userSelectors.addressSelector).focus()
-            cy.get(userSelectors.addressSelector).type(user1.address)
+            cy.enterValue(userSelectors.addressSelector, user1.address)
         })
     
         it('should open the country dropdown', () => {
@@ -97,9 +85,7 @@ describe('Select a Hotel', () => {
         })
     
         it('should select the country', () => {
-            cy.get(userSelectors.countryOptionSelect)
-            .eq(1)
-            .click({force:true})
+            cy.selectAtIndex(userSelectors.countryOptionSelect, 1)
         })
     })
 
@@ -108,13 +94,11 @@ describe('Select a Hotel', () => {
         describe('Add Adult Traveller 1', () => {
 
             it('should enter the First name', () => {
-                cy.get(formSelectors.firstNameSelector).focus()
-                cy.get(formSelectors.firstNameSelector).type(user1.firstName)
+                cy.enterValue(formSelectors.firstNameSelector, user1.firstName)
             })
         
             it('should enter the Last name', () => {
-                cy.get(formSelectors.lastNameSelector).focus()
-                cy.get(formSelectors.lastNameSelector).type(user1.lastName)
+                cy.enterValue(formSelectors.lastNameSelector, user1.lastName)
             })
         })
 
@@ -125,13 +109,11 @@ describe('Select a Hotel', () => {
             })
             
             it('should enter the First name', () => {
-                cy.get(otherTravellersSelectors.secondAdultFirstNameSelector).focus()
-                cy.get(otherTravellersSelectors.secondAdultFirstNameSelector).type(user2.firstName)
+                cy.enterValue(otherTravellersSelectors.secondAdultFirstNameSelector, user2.firstName)
             })
         
             it('should enter the Last name', () => {
-                cy.get(otherTravellersSelectors.secondAdultLastNameSelector).focus()
-                cy.get(otherTravellersSelectors.secondAdultLastNameSelector).type(user2.lastName)
+                cy.enterValue(otherTravellersSelectors.secondAdultLastNameSelector, user2.lastName)
             })
         })
 
@@ -142,13 +124,11 @@ describe('Select a Hotel', () => {
             })
             
             it('should enter the child traveller 1 First name', () => {
-                cy.get(otherTravellersSelectors.firstChildFirstNameSelector).focus()
-                cy.get(otherTravellersSelectors.firstChildFirstNameSelector).type(child1.firstName)
+                cy.enterValue(otherTravellersSelectors.firstChildFirstNameSelector, child1.firstName)
             })
         
             it('should enter the Last name', () => {
-                cy.get(otherTravellersSelectors.firstChildLastNameSelector).focus()
-                cy.get(otherTravellersSelectors.firstChildLastNameSelector).type(child1.lastName)
+                cy.enterValue(otherTravellersSelectors.firstChildLastNameSelector, child1.lastName)
             })
         })
     
@@ -159,13 +139,11 @@ describe('Select a Hotel', () => {
             })
             
             it('should enter the child traveller 1 First name', () => {
-                cy.get(otherTravellersSelectors.secondChildFirstNameSelector).focus()
-                cy.get(otherTravellersSelectors.secondChildFirstNameSelector).type(child2.firstName)
+                cy.enterValue(otherTravellersSelectors.secondChildFirstNameSelector, child2.firstName)
             })
         
             it('should enter the Last name', () => {
-                cy.get(otherTravellersSelectors.secondChildLastNameSelector).focus()
-                cy.get(otherTravellersSelectors.secondChildLastNameSelector).type(child2.lastName)
+                cy.enterValue(otherTravellersSelectors.secondChildLastNameSelector, child2.lastName)
             })
         })
 

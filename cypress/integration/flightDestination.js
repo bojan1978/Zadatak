@@ -18,20 +18,15 @@ describe('Select a top flight destination', () => {
     })
 
     it('should select Emirates Airlines', () => {
-        cy.get('#myTabContent4 a.waves-effect')
-        .eq(7)
-        .click( { force: true })
+        cy.selectAtIndex('#myTabContent4 a.waves-effect', 7)
     })
 
     it('should check if the correct destination is chosen', () => {
-        cy.scrollTo('top')
-        cy.get('.sec__title_list').should('have.text', flight.destination)
+        cy.scrollAndCheckText('.sec__title_list', flight.destination)
     })
 
     it('should select the a flight', () => {
-        cy.get(generalSelectors.submit)
-        .eq(9)
-        .click( { force: true } )
+        cy.selectAtIndex(generalSelectors.submit, 9)
     })
 
     it('should check if user has landed on flights bookings page', () => {
@@ -45,28 +40,23 @@ describe('Select a top flight destination', () => {
     describe('Add personal information', () => {
 
         it('should enter the First name', () => {
-            cy.get(userSelectors.firstNameSelector).focus()
-            cy.get(userSelectors.firstNameSelector).type(user1.firstName)
+            cy.enterValue(userSelectors.firstNameSelector, user1.firstName)
         })
     
         it('should enter the Last name', () => {
-            cy.get(userSelectors.lastNameSelector).focus()
-            cy.get(userSelectors.lastNameSelector).type(user1.lastName)
+            cy.enterValue(userSelectors.lastNameSelector, user1.lastName)
         })
     
         it('should enter the users email', () => {
-            cy.get(userSelectors.emailSelector).focus()
-            cy.get(userSelectors.emailSelector).type(user1.email)
+            cy.enterValue(userSelectors.emailSelector, user1.email)
         })
     
         it('should enter the users phone', () => {
-            cy.get(userSelectors.phoneSelector).focus()
-            cy.get(userSelectors.phoneSelector).type(user1.email)
+            cy.enterValue(userSelectors.phoneSelector, user1.phone)
         })
         
         it('should enter the users address', () => {
-            cy.get(userSelectors.addressSelector).focus()
-            cy.get(userSelectors.addressSelector).type(user1.address)
+            cy.enterValue(userSelectors.addressSelector, user1.address)
         })
     
         it('should open the country dropdown', () => {
@@ -90,22 +80,18 @@ describe('Select a top flight destination', () => {
         })
     
         it('should select the country', () => {
-            cy.get(userSelectors.countryOptionSelect)
-            .eq(1)
-            .click({force:true})
+            cy.selectAtIndex(userSelectors.countryOptionSelect, 1)
         })
     })
 
     describe('Add travellers information', () => {
 
         it('should enter the First name', () => {
-            cy.get(formSelectors.firstNameSelector).focus()
-            cy.get(formSelectors.firstNameSelector).type(user1.firstName)
+            cy.enterValue(formSelectors.firstNameSelector, user1.firstName)
         })
     
         it('should enter the Last name', () => {
-            cy.get(formSelectors.lastNameSelector).focus()
-            cy.get(formSelectors.lastNameSelector).type(user1.lastName)
+            cy.enterValue(formSelectors.lastNameSelector, user1.lastName)
         })
     
         it('should open the country dropdown', () => {
@@ -125,8 +111,7 @@ describe('Select a top flight destination', () => {
         })
 
         it('should enter the users passport number', () => {
-            cy.get(formSelectors.passportNumber).focus()
-            cy.get(formSelectors.passportNumber).type(user1.passport)
+            cy.enterValue(formSelectors.passportNumber, user1.passport)
         })
 
         it('should select passport issue month', () => {
