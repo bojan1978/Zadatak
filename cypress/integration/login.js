@@ -1,5 +1,10 @@
 /// <reference types="Cypress" />
 
+import { generalSelectors , headerLogin } from '../support/pom_objects/general'
+import { login, pageAssertions } from '../fixtures/assertionData'
+import { userSelectors } from '../support/pom_objects/userSelectors'
+
+
 const user = Cypress.env("user")
 const agent = Cypress.env("agent")
 
@@ -10,36 +15,36 @@ describe('Log in to the application', () => {
             cy.visit('/')
         })
         it('should click on login button', () => {
-            cy.get('.theme-btn.theme-btn-small.theme-btn-transparent.ml-1.waves-effect').click()
+            cy.get(headerLogin).click()
         })
         it('accept cookies', () => {
-             cy.get('#cookie_stop').click()
+             cy.get(generalSelectors.cookie).click()
             })
         it('should check if the Login page has opened', () => {
-            cy.get('.modal-content .modal-title.title').should('have.text', 'Login')
+            cy.get(generalSelectors.login).should('have.text', login.pageTitle)
         })
         it('should enter username', () => {
-            cy.get('.input-box [name="email"').focus()
-            // cy.get('.input-box [name="email"]').type("user@phptravels.com")
-            cy.get('.input-box [name="email"]').type(user.username)
+            cy.get(userSelectors.emailSelector).focus()
+            cy.get(userSelectors.emailSelector).type(user.username)
         })
         it('should enter password', () => {
-            cy.get('.input-box [name="password"').focus()
-            cy.get('.input-box  [name="password"]').type(user.password)
+            cy.get(userSelectors.passwordSelector).focus()
+            cy.get(userSelectors.passwordSelector).type(user.password)
         })
         it('should click on Login button', () => {
             cy.scrollTo('top')
-            cy.get('.btn-box > .btn-default').click({ force: true })
+            cy.get(generalSelectors.login).click({ force: true })
         })
 
         it('should check if user has landed on dashboard page', () => {
-            cy.url().should('include', 'account/dashboard')
+            cy.url().should('include', pageAssertions.dashboardPage)
         })
         it('should logut from the application', () => {
-            cy.get('.la.la-power-off.mr-2.text-color-6').click()
+            cy.get(generalSelectors.logout).click()
         })
         it('should check if we are back on login page', () => {
-            cy.get('.modal-content .modal-title.title').should('have.text', 'Login')
+            cy.get(generalSelectors.login).should('have.text', login.pageTitle)
+
         })
     })
 
@@ -48,35 +53,35 @@ describe('Log in to the application', () => {
             cy.visit('/')
         })
         it('should click on login button', () => {
-            cy.get('.theme-btn.theme-btn-small.theme-btn-transparent.ml-1.waves-effect').click()
+            cy.get(headerLogin).click()
         })
         it('accept cookies', () => {
-             cy.get('#cookie_stop').click()
-            })
+            cy.get(generalSelectors.cookie).click()
+        })
         it('should check if the Login page has opened', () => {
-            cy.get('.modal-content .modal-title.title').should('have.text', 'Login')
+            cy.get(generalSelectors.login).should('have.text', login.pageTitle)
         })
         it('should enter username', () => {
-            cy.get('.input-box [name="email"').focus()
-            cy.get('.input-box [name="email"]').type(agent.username)
+            cy.get(userSelectors.emailSelector).focus()
+            cy.get(userSelectors.emailSelector).type(agent.username)
         })
         it('should enter password', () => {
-            cy.get('.input-box [name="password"').focus()
-            cy.get('.input-box  [name="password"]').type(agent.password)
+            cy.get(userSelectors.passwordSelector).focus()
+            cy.get(userSelectors.passwordSelector).type(agent.password)
         })
         it('should click on Login button', () => {
             cy.scrollTo('top')
-            cy.get('.btn-box > .btn-default').click({ force: true })
+            cy.get(generalSelectors.login).click({ force: true })
         })
 
         it('should check if user has landed on dashboard page', () => {
-            cy.url().should('include', 'account/dashboard')
+            cy.url().should('include', pageAssertions.dashboardPage)
         })
         it('should logut from the application', () => {
-            cy.get('.la.la-power-off.mr-2.text-color-6').click()
+            cy.get(generalSelectors.logout).click()
         })
         it('should check if we are back on login page', () => {
-            cy.get('.modal-content .modal-title.title').should('have.text', 'Login')
+            cy.get(generalSelectors.login).should('have.text', login.pageTitle)
         })
     })
 })

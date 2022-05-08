@@ -1,5 +1,12 @@
 /// <reference types="Cypress" />
 
+import { user1 , user2 } from '../fixtures/userData'
+import { destination } from '../fixtures/destination'
+import { pageAssertions } from '../fixtures/assertionData'
+import { generalSelectors , paymentSelectors, tourSelectors} from '../support/pom_objects/general'
+import { userSelectors, formSelectors , otherTravellersSelectors } from '../support/pom_objects/userSelectors'
+
+
 describe('Select a Tour', () => {
 
     it('should land on homepage', () => {
@@ -7,7 +14,7 @@ describe('Select a Tour', () => {
     })
 
     it('accept cookies', () => {
-        cy.get('#cookie_stop').click()
+        cy.get(generalSelectors.cookie).click()
     })
 
     it('should select Hurgada tour', () => {
@@ -18,98 +25,97 @@ describe('Select a Tour', () => {
 
     it('should check if the correct hotel is chosen', () => {
         cy.scrollTo('top')
-        cy.get('.single-content-item.pb-4 .title.font-size-26').should('have.text', 'hurghada sunset desert safari')
+        cy.get(generalSelectors.hotelSelection).should('have.text', destination.tour)
     })
 
     it('should open calendar', () => {
-        cy.get('[name="date"]').click({frce:true})
+        cy.get(tourSelectors.datePickerSelector).click({force:true})
     })
 
     it('should select tour date', () => {
-        cy.get('.day')
+        cy.get(generalSelectors.daySelector)
         .eq(37)
         .click( {force: true } )
     })
     
-
     it('should check the tour date', () => {
         cy.scrollTo('top')
-        cy.get('[name="date"]').should('have.value', '31-05-2022')
+        cy.get(tourSelectors.datePickerSelector).should('have.value', destination.tourDate)
     })
 
     it('should select the number of adults', () => {
-        cy.get('#adults').select("2", {force: true})
+        cy.get(tourSelectors.adultsTour).select(destination.tourAdults, {force: true})
     })
 
     it('should select the number of children', () => {
-        cy.get('#childs').select("2", {force: true})
+        cy.get(tourSelectors.clidrenTour).select(destination.tourChildren, {force: true})
     })
 
     it('should select the number of infants', () => {
-        cy.get('#infants').select("1", {force: true})
+        cy.get(tourSelectors.infantsTour).select(destination.tourInfants, {force: true})
     })
 
     it('should book the tour', () => {
-        cy.get('[type="submit"]').click( { force: true } )
+        cy.get(generalSelectors.submit).click( { force: true } )
     })
 
     it('should check if user has landed on hotel bookings page', () => {
-        cy.url().should('include', 'tours/booking')
+        cy.url().should('include', pageAssertions.toursPage)
     })
 
     it('accept cookies', () => {
-        cy.get('#cookie_stop').click({ force: true })
+        cy.get(generalSelectors.cookie).click( {force: true})
     })
 
     describe('Add personal information', () => {
 
         it('should enter the First name', () => {
-            cy.get('[name="firstname"]').focus()
-            cy.get('[name="firstname"]').type('User First Name')
+            cy.get(userSelectors.firstNameSelector).focus()
+            cy.get(userSelectors.firstNameSelector).type(user1.firstName)
         })
     
         it('should enter the Last name', () => {
-            cy.get('[name="lastname"]').focus()
-            cy.get('[name="lastname"]').type('User Last Name')
+            cy.get(userSelectors.lastNameSelector).focus()
+            cy.get(userSelectors.lastNameSelector).type(user1.lastName)
         })
     
         it('should enter the users email', () => {
-            cy.get('[name="email"]').focus()
-            cy.get('[name="email"]').type('test@test.com')
+            cy.get(userSelectors.emailSelector).focus()
+            cy.get(userSelectors.emailSelector).type(user1.email)
         })
     
         it('should enter the users phone', () => {
-            cy.get('[name="phone"]').focus()
-            cy.get('[name="phone"]').type(1234567890)
+            cy.get(userSelectors.phoneSelector).focus()
+            cy.get(userSelectors.phoneSelector).type(user1.email)
         })
         
         it('should enter the users address', () => {
-            cy.get('[name="address"]').focus()
-            cy.get('[name="address"]').type('123 Test')
+            cy.get(userSelectors.addressSelector).focus()
+            cy.get(userSelectors.addressSelector).type(user1.address)
         })
     
         it('should open the country dropdown', () => {
-            cy.get(':nth-child(6) > .input-box > .form-group > .input-items > .select2 > .selection > .select2-selection > .select2-selection__arrow > b').click({force:true})
+            cy.get(userSelectors.countryDropdown).click({force:true})
         })
     
         it('should enter autocomplete text', () => {
-            cy.get('.select2-search__field').type('Serbia')
+            cy.get(userSelectors.autocompleteSelector).type(user1.country)
         })
     
         it('should select the country', () => {
-            cy.get('.select2-results__option.select2-results__option--highlighted').click({force:true})
+            cy.get(userSelectors.countryDefaultSelect).click({force:true})
         })
     
         it('should open the Nationality dropdown', () => {
-            cy.get(':nth-child(7) > .input-box > .form-group > .input-items > .select2 > .selection > .select2-selection > .select2-selection__arrow > b').click({force:true})
+            cy.get(userSelectors.nationalityDropdown).click({force:true})
         })
     
         it('should enter autocomplete text', () => {
-            cy.get('.select2-search__field').type('Ser')
+            cy.get(userSelectors.autocompleteSelector).type(user1.autocomplete)
         })
     
         it('should select the country', () => {
-            cy.get('.select2-results__option')
+            cy.get(userSelectors.countryOptionSelect)
             .eq(1)
             .click({force:true})
         })
@@ -120,30 +126,31 @@ describe('Select a Tour', () => {
         describe('Add Adult Traveller 1', () => {
 
             it('should enter the First name', () => {
-                cy.get('[name="firstname_1"]').focus()
-                cy.get('[name="firstname_1"]').type('User First Name')
+                cy.get(formSelectors.firstNameSelector).focus()
+                cy.get(formSelectors.firstNameSelector).type(user1.firstName)
             })
         
             it('should enter the Last name', () => {
-                cy.get('[name="lastname_1"]').focus()
-                cy.get('[name="lastname_1"]').type('User Last Name')
+                cy.get(formSelectors.lastNameSelector).focus()
+                cy.get(formSelectors.lastNameSelector).type(user1.lastName)
             })
         })
 
         describe('Add Adult Traveller 2', () => {
 
             it('should select the traveller 2 title', () => {
-                cy.get('[name="title_2"]').select("MRS", {force: true})
+                cy.get(otherTravellersSelectors.secondAdultTitleSelector).select(user2.title, {force: true})
             })
             
             it('should enter the First name', () => {
-                cy.get('[name="firstname_2"]').focus()
-                cy.get('[name="firstname_2"]').type('Second User First Name')
+                cy.get(otherTravellersSelectors.secondAdultFirstNameSelector).focus()
+                cy.get(otherTravellersSelectors.secondAdultFirstNameSelector).type(user2.firstName)
+        
             })
         
             it('should enter the Last name', () => {
-                cy.get('[name="lastname_2"]').focus()
-                cy.get('[name="lastname_2"]').type('Second User Last Name')
+                cy.get(otherTravellersSelectors.secondAdultLastNameSelector).focus()
+                cy.get(otherTravellersSelectors.secondAdultLastNameSelector).type(user2.lastName)
             })
         })
 
@@ -152,15 +159,15 @@ describe('Select a Tour', () => {
     describe('Paying and continuing forward', () => {
 
         it('should select the Pay Later option', () => {
-            cy.get('#gateway_pay-later').click({force:true})
+            cy.get(paymentSelectors.paylaterSelector).click({force:true})
         })
 
         it('should select Terms and Conditions checkbox', () => {
-            cy.get('#agreechb').click({force:true})
+            cy.get(paymentSelectors.termsSelector).click({force:true})
         })
 
         it('should check if the confirmation button is enabled', () => {
-            cy.get('#booking').should('not.be.disabled')
+            cy.get(paymentSelectors.confirmationSelection).should('not.be.disabled')
         })
     })
 

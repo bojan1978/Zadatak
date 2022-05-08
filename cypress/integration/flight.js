@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
-// const user = Cypress.env("user")
-// const agent = Cypress.env("agent")
+import { departure, arrival, flight } from '../fixtures/flightData'
+import { generalSelectors , flightSelectors } from '../support/pom_objects/general'
 
 describe('Book a flight', () => {
 
@@ -10,7 +10,7 @@ describe('Book a flight', () => {
     })
 
     it('accept cookies', () => {
-        cy.get('#cookie_stop').click()
+        cy.get(generalSelectors.cookie).click()
     })
 
     it('click on Flight tab', () => {
@@ -24,24 +24,24 @@ describe('Book a flight', () => {
     describe('select place of departure', () => {
 
         it('should open departure airport', () => {
-            cy.get('#autocomplete').click( {force: true } )
+            cy.get(flightSelectors.departureSelector).click( {force: true } )
         })
     
         it('should enter departure airport name', () => {
-            cy.get('#autocomplete')
+            cy.get(flightSelectors.departureSelector)
             .clear()
-            .type('Beograd')
+            .type(departure.city)
         })
     
         it('should select Beograd as departure airport', () => {
-            cy.get('.autocomplete-result')
+            cy.get(flightSelectors.autocompleteSelect)
             .eq(0)
             .click( {force: true } )
         })
     
         it('should check if Belgrade airport has been selected', () => {
             cy.scrollTo('top')
-            cy.get('#autocomplete').should('have.value', 'BEG - Beograd - Belgrade')
+            cy.get(flightSelectors.departureSelector).should('have.value', departure.airport)
         })
 
     })
@@ -49,31 +49,31 @@ describe('Book a flight', () => {
     describe('select place of destination', () => {
 
         it('should open destination airport', () => {
-            cy.get('#autocomplete2').click( {force: true } )
+            cy.get(flightSelectors.destinationSelector).click( {force: true } )
         })
     
         it('should enter destination airport name', () => {
-            cy.get('#autocomplete2')
+            cy.get(flightSelectors.destinationSelector)
             .clear()
-            .type('New York')
+            .type(arrival.city)
         })
     
         it('should select New York JFK as destination airport', () => {
-            cy.get('.autocomplete-result')
+            cy.get(flightSelectors.autocompleteSelect)
             .eq(1)
             .click( {force: true } )
         })
     
         it('should check if JFK airport has been selected', () => {
             cy.scrollTo('top')
-            cy.get('#autocomplete2').should('have.value', 'JFK - John F Kennedy Intl - New York')
+            cy.get(flightSelectors.destinationSelector).should('have.value', arrival.airport)
         })
     })
 
     describe('select the travel date', () => {
 
         it('click on the departure date picker', () => {
-            cy.get('#departure').click( {force: true } )
+            cy.get(flightSelectors.departureDateSelector).click( {force: true } )
         })
 
         it('should go to next month', () => {
@@ -83,25 +83,25 @@ describe('Book a flight', () => {
         })
 
         it('should select date of departure', () => {
-            cy.get('.day')
+            cy.get(generalSelectors.daySelector)
             .eq(90)
             .click( {force: true } )
         })
         
         it('should select date of arrival', () => {
-            cy.get('.day')
+            cy.get(generalSelectors.daySelector)
             .eq(158)
             .click( {force: true } )
         })
 
         it('should check the departure date', () => {
             cy.scrollTo('top')
-            cy.get('#departure').should('have.value', '04-06-2022')
+            cy.get(flightSelectors.departureDateSelector).should('have.value', departure.date)
         })
 
         it('should check the arrival date', () => {
             cy.scrollTo('top')
-            cy.get('#return').should('have.value', '30-06-2022')
+            cy.get(flightSelectors.destinationDateSelector).should('have.value', arrival.date)
         })
 
     })
@@ -143,7 +143,7 @@ describe('Book a flight', () => {
 
         it('should check if the correct flight is chosen', () => {
             cy.scrollTo('top')
-            cy.get('.sec__title_list').should('have.text', 'BEG  JFK')
+            cy.get('.sec__title_list').should('have.text', flight.booking)
         })
 
     })
