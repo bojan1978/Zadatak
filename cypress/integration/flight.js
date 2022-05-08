@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
-const user = Cypress.env("user")
-const agent = Cypress.env("agent")
+// const user = Cypress.env("user")
+// const agent = Cypress.env("agent")
 
 describe('Book a flight', () => {
 
@@ -52,13 +52,13 @@ describe('Book a flight', () => {
             cy.get('#autocomplete2').click( {force: true } )
         })
     
-        it('should enter departure airport name', () => {
+        it('should enter destination airport name', () => {
             cy.get('#autocomplete2')
             .clear()
             .type('New York')
         })
     
-        it('should select New York JFK as departure airport', () => {
+        it('should select New York JFK as destination airport', () => {
             cy.get('.autocomplete-result')
             .eq(1)
             .click( {force: true } )
@@ -144,7 +144,6 @@ describe('Book a flight', () => {
         it('should check if the correct flight is chosen', () => {
             cy.scrollTo('top')
             cy.get('.sec__title_list').should('have.text', 'BEG  JFK')
-
         })
 
     })
